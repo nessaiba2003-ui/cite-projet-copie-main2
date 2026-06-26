@@ -25,15 +25,7 @@ npm run build
 npm run preview
 ```
 
-## Comptes de test
 
-| Rôle | Email | Mot de passe |
-|------|-------|--------------|
-| Super Admin | admin@uca.ma | admin123 |
-| Admin Réservations | reservation@uca.ma | res123 |
-| Admin Événements | evenement@uca.ma | evt123 |
-| Demandeur INTERNE | interne@uca.ma | inter123 |
-| Demandeur EXTERNE | externe@test.ma | exter123 |
 
 ## Stack
 
