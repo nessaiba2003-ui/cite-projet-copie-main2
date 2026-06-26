@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Modal from '@/components/ui/Modal';
@@ -13,11 +13,6 @@ import {
   EQUIPEMENT_SUGGESTIONS,
   TYPE_LOCAL_OPTIONS,
   FLOOR_OPTIONS,
-  FLOOR_TO_POLE_CODE,
-  POLE_CODE_TO_FLOOR,
-  POLES_FIXED,
-  findApiPoleByCode,
-  findFixedCodeByApiPole,
 } from '@/utils/poles';
 import { LOCAL_STATUS } from '@/utils/constants';
 import { cn } from '@/utils/helpers';
@@ -30,7 +25,6 @@ const emptyForm = {
   description: '',
   statut: LOCAL_STATUS.DISPONIBLE,
   raisonIndisponibilite: '',
-  poleCodeSelected: '', // ← code du pôle fixe (INCUBATION, VALORISATION, RD, TRANSVERSE)
   typeLocal: '',
   disposition: '',
   equipements: [],
@@ -39,7 +33,15 @@ const emptyForm = {
   panoramaUrl: '',
 };
 
-export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave, saving }) {
+export default function LocalFormModal({
+  isOpen,
+  onClose,
+  editing,
+  poles,
+  transversesPole,
+  onSave,
+  saving,
+}) {
   const [form, setForm] = useState(emptyForm);
   const [equipInput, setEquipInput] = useState('');
   const [uploadingVideo, setUploadingVideo] = useState(false);
@@ -47,17 +49,6 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
   useEffect(() => {
     if (!isOpen) return;
     if (editing) {
-      // Si on édite : on retrouve le code fixe du pôle à partir du pôle API stocké
-      let initialPoleCode = '';
-      if (editing.poleId && Array.isArray(poles)) {
-        const apiPole = poles.find((p) => String(p.id) === String(editing.poleId));
-        initialPoleCode = findFixedCodeByApiPole(apiPole) || '';
-      }
-      // Fallback : déduit du code du pôle direct si présent
-      if (!initialPoleCode && editing.poleCode) {
-        initialPoleCode = editing.poleCode;
-      }
-
       setForm({
         code: editing.code ?? '',
         nom: editing.nom ?? '',
@@ -66,7 +57,6 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
         description: editing.description ?? '',
         statut: editing.statut ?? LOCAL_STATUS.DISPONIBLE,
         raisonIndisponibilite: editing.raisonIndisponibilite ?? '',
-        poleCodeSelected: initialPoleCode,
         typeLocal: editing.typeLocal ?? '',
         disposition: editing.disposition ?? '',
         equipements: Array.isArray(editing.equipements) ? [...editing.equipements] : [],
@@ -77,13 +67,10 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
     } else {
       setForm(emptyForm);
     }
-  }, [isOpen, editing, poles]);
+  }, [isOpen, editing]);
 
   const set = (key, value) => setForm((p) => ({ ...p, [key]: value }));
 
-  /**
-   * BUG FIX ÉQUIPEMENTS : toggle correct (ajoute OU retire)
-   */
   const toggleEquip = (name) => {
     if (!name?.trim()) return;
     const clean = name.trim();
@@ -111,40 +98,10 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
     set('equipements', form.equipements.filter((e) => e !== name));
   };
 
-  /**
-   * Synchronisation Étage → Pôle
-   */
   const handleEtageChange = (newEtage) => {
-    const etageNum = Number(newEtage);
-    const poleCode = FLOOR_TO_POLE_CODE[etageNum];
-
-    setForm((p) => ({
-      ...p,
-      etage: etageNum,
-      // Auto-set le pôle si l'étage en a un (étages 1-4)
-      poleCodeSelected: poleCode && poleCode !== 'ESPACE_OUVERT' ? poleCode : '',
-    }));
+    set('etage', Number(newEtage));
   };
 
-  /**
-   * Pôle → Étage
-   */
-  const handlePoleChange = (newPoleCode) => {
-    if (!newPoleCode) {
-      set('poleCodeSelected', '');
-      return;
-    }
-    const targetFloor = POLE_CODE_TO_FLOOR[newPoleCode];
-    setForm((p) => ({
-      ...p,
-      poleCodeSelected: newPoleCode,
-      ...(targetFloor !== undefined && { etage: targetFloor }),
-    }));
-  };
-
-  /**
-   * Capacité : empêche les valeurs négatives
-   */
   const handleCapaciteChange = (e) => {
     const v = e.target.value;
     if (v === '' || (Number(v) >= 0 && /^\d*$/.test(v))) {
@@ -155,7 +112,6 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation client
     if (!form.nom?.trim()) {
       toast.error('Le nom est obligatoire');
       return;
@@ -169,28 +125,15 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
       toast.error("L'étage doit être entre 0 et 5");
       return;
     }
-    if (!form.poleCodeSelected && form.etage >= 1 && form.etage <= 4) {
-      toast.error('Le pôle est obligatoire pour les étages 1 à 4');
-      return;
-    }
 
-    // Conversion : code de pôle fixe → id de pôle en base (si possible)
-    let resolvedPoleId = null;
-    if (form.poleCodeSelected) {
-      const apiPole = findApiPoleByCode(poles, form.poleCodeSelected);
-      if (apiPole?.id) {
-        resolvedPoleId = apiPole.id;
-      }
-    }
-
+    // ✅ Tous les locaux sont automatiquement rattachés au pôle Services Transverses
     onSave({
       ...form,
       ...(editing ? { code: form.code } : {}),
       capacite: cap,
       etage: Number(form.etage),
-      poleId: resolvedPoleId,
-      // On envoie aussi le code de pôle pour que le back puisse créer le pôle si besoin
-      poleCode: form.poleCodeSelected || null,
+      poleId: transversesPole?.id ?? null,
+      poleCode: 'TRANSVERSE',
     });
   };
 
@@ -217,13 +160,6 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
     }
   };
 
-  const currentPoleInfo = useMemo(
-    () => POLES_FIXED.find((p) => p.code === form.poleCodeSelected) || null,
-    [form.poleCodeSelected],
-  );
-
-  const currentFloorInfo = FLOOR_OPTIONS.find((f) => f.value === Number(form.etage));
-
   return (
     <Modal
       isOpen={isOpen}
@@ -240,7 +176,6 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
 
         {/* Infos de base */}
         <div className="grid gap-4 sm:grid-cols-2">
-          {/* Code : visible uniquement en édition (lecture seule) */}
           {editing && (
             <Input
               label="Code"
@@ -295,68 +230,39 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
               {FLOOR_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
                   {opt.label}
-                  {opt.poleCode && opt.poleCode !== 'ESPACE_OUVERT'
-                    ? ` · ${opt.poleName}`
-                    : opt.value === 5
-                      ? ' · Espace ouvert'
-                      : opt.value === 0
-                        ? ' · RDC libre'
-                        : ''}
                 </option>
               ))}
             </select>
-            <p className="mt-1 text-xs text-stone-500">
-              {currentFloorInfo?.poleCode && currentFloorInfo.poleCode !== 'ESPACE_OUVERT'
-                ? `Pôle associé : ${currentFloorInfo.poleName}`
-                : currentFloorInfo?.value === 5
-                  ? 'Espace ouvert / partagé'
-                  : 'Pas de pôle obligatoire'}
-            </p>
+            <p className="mt-1 text-xs text-stone-500">Localisation physique du local</p>
           </div>
         </div>
 
-        {/* Pôle + Type + Disposition + Statut */}
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label className="mb-1.5 block text-sm font-semibold text-stone-700">
-              Pôle{' '}
-              {Number(form.etage) >= 1 && Number(form.etage) <= 4 && (
-                <span className="text-red-500">*</span>
-              )}
-            </label>
-            <select
-              className={selectClass}
-              value={form.poleCodeSelected}
-              onChange={(e) => handlePoleChange(e.target.value)}
-              required={Number(form.etage) >= 1 && Number(form.etage) <= 4}
-              disabled={Number(form.etage) === 0 || Number(form.etage) === 5}
-            >
-              <option value="">
-                {Number(form.etage) === 0
-                  ? '— Aucun pôle (RDC) —'
-                  : Number(form.etage) === 5
-                    ? '— Espace ouvert —'
-                    : '— Sélectionner un pôle —'}
-              </option>
-              {POLES_FIXED.map((p) => (
-                <option key={p.code} value={p.code}>
-                  {p.nom} (Étage {p.etage})
-                </option>
-              ))}
-            </select>
-            {currentPoleInfo && (
-              <p className="mt-1 text-xs text-stone-500">
-                Pôle sélectionné :{' '}
-                <span
-                  className="font-semibold"
-                  style={{ color: currentPoleInfo.color }}
-                >
-                  {currentPoleInfo.shortName}
-                </span>
-              </p>
-            )}
+        {/* ✅ PÔLE AUTOMATIQUE — Badge en lecture seule (jaune doré) */}
+        <div>
+          <label className="mb-1.5 block text-sm font-semibold text-stone-700">
+            Pôle{' '}
+            <span className="text-stone-400 font-normal text-xs">
+              (assigné automatiquement)
+            </span>
+          </label>
+          <div
+            className="flex items-center gap-2.5 rounded-xl border-2 px-4 py-3 text-sm font-bold shadow-sm"
+            style={{
+              background: 'linear-gradient(135deg, #FDE68A 0%, #D4AF37 100%)',
+              borderColor: '#D4AF37',
+              color: '#7C5E10',
+            }}
+          >
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-800 shadow-sm" />
+            Pôle Services Transverses
           </div>
+          <p className="mt-1.5 text-xs text-stone-500">
+            Tous les locaux de la Cité d&apos;Innovation sont rattachés au pôle Services Transverses.
+          </p>
+        </div>
 
+        {/* Type + Disposition + Statut */}
+        <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-semibold text-stone-700">
               Type de local
@@ -393,7 +299,7 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
             </select>
           </div>
 
-          <div>
+          <div className="sm:col-span-2">
             <label className="mb-1.5 block text-sm font-semibold text-stone-700">Statut</label>
             <div className="flex flex-wrap items-center gap-3">
               <select
@@ -421,7 +327,7 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
           />
         )}
 
-        {/* ÉQUIPEMENTS - TOGGLE CORRIGÉ */}
+        {/* ÉQUIPEMENTS */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-stone-700">
             Équipements
@@ -452,7 +358,6 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
             })}
           </div>
 
-          {/* Ajouter un équipement custom */}
           <div className="flex gap-2">
             <input
               type="text"
@@ -478,7 +383,6 @@ export default function LocalFormModal({ isOpen, onClose, editing, poles, onSave
             </Button>
           </div>
 
-          {/* Liste des équipements custom ajoutés (hors suggestions) */}
           {form.equipements.filter((eq) => !EQUIPEMENT_SUGGESTIONS.includes(eq)).length > 0 && (
             <div className="mt-3 rounded-xl border border-stone-200 bg-stone-50 p-3">
               <p className="mb-2 text-xs font-semibold text-stone-600">

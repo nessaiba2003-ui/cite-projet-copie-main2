@@ -14,6 +14,7 @@ import { getFloorLabel, inferEtage } from '@/utils/floorHelpers';
 export default function GestionLocauxPage() {
   const [locaux, setLocaux] = useState([]);
   const [poles, setPoles] = useState([]);
+  const [transversesPole, setTransversesPole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -28,6 +29,13 @@ export default function GestionLocauxPage() {
       .then(([l, p]) => {
         setLocaux(l);
         setPoles(p);
+
+        // ✅ Identifie le pôle "Services Transverses" (tous les locaux y seront rattachés)
+        const transverses = p.find((pole) => {
+          const nom = (pole.nom || pole.name || '').toLowerCase();
+          return nom.includes('transverse') || nom.includes('transversal');
+        });
+        setTransversesPole(transverses || null);
       })
       .catch(() => toast.error('Erreur de chargement'))
       .finally(() => setLoading(false));
@@ -40,11 +48,17 @@ export default function GestionLocauxPage() {
   const handleSave = async (payload) => {
     setSaving(true);
     try {
+      // ✅ INJECTION AUTOMATIQUE du pôle Services Transverses
+      const finalPayload = {
+        ...payload,
+        poleId: transversesPole?.id ?? payload.poleId ?? null,
+      };
+
       if (editing) {
-        await localService.update(editing.id, payload);
+        await localService.update(editing.id, finalPayload);
         toast.success('Local mis à jour');
       } else {
-        await localService.create(payload);
+        await localService.create(finalPayload);
         toast.success('Local créé');
       }
       setModalOpen(false);
@@ -82,7 +96,14 @@ export default function GestionLocauxPage() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="font-display text-lg font-bold text-stone-800">Gestion des locaux</h1>
-          <p className="mt-0.5 text-xs text-stone-600">Création, modification et suivi des espaces</p>
+          <p className="mt-0.5 text-xs text-stone-600">
+            Création, modification et suivi des espaces
+            {transversesPole && (
+              <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700 border border-amber-200">
+                Pôle auto : Services Transverses
+              </span>
+            )}
+          </p>
         </div>
 
         <Button
@@ -193,7 +214,7 @@ export default function GestionLocauxPage() {
         title="Supprimer le local"
         description={
           deleteTarget
-            ? `Supprimer "${deleteTarget.nom}" (${deleteTarget.code}) ? Cette action est irréversible.`
+            ? Supprimer "${deleteTarget.nom}" (${deleteTarget.code}) ? Cette action est irréversible.
             : 'Supprimer ce local ?'
         }
         confirmText="Supprimer"
@@ -209,6 +230,7 @@ export default function GestionLocauxPage() {
         onClose={() => setModalOpen(false)}
         editing={editing}
         poles={poles}
+        transversesPole={transversesPole}
         onSave={handleSave}
         saving={saving}
       />

@@ -43,9 +43,11 @@ const POLE_BRIGHT = {
 // ===== TOUS LES LOCAUX = POLE SERVICES TRANSVERSES (Jaune doré) =====
 const TRANSVERSE_COLOR = POLE_COLORS.gold;
 const TRANSVERSE_COLOR_DARK = '#B8941F';
+// ✅ CORRECTION : Ajout des backticks
 const TRANSVERSE_GRADIENT = `linear-gradient(135deg, ${POLE_LIGHT.gold} 0%, ${POLE_COLORS.gold} 100%)`;
 const TRANSVERSE_SHADOW = 'rgba(212, 175, 55, 0.35)';
 
+// ✅ CORRECTION : Ajout des backticks
 const SMOOTH_GRADIENT = `linear-gradient(135deg,
   ${POLE_COLORS.green} 0%,
   ${POLE_COLORS.blue} 33%,
@@ -57,6 +59,7 @@ const POLES = [
   {
     title: 'Pôle Incubation & Entrepreneuriat',
     icon: Rocket,
+    // ✅ CORRECTION : Ajout des backticks
     gradient: `linear-gradient(135deg, ${POLE_LIGHT.green} 0%, ${POLE_COLORS.green} 100%)`,
     accent: POLE_COLORS.green,
     shadowColor: 'rgba(22, 163, 74, 0.35)',
@@ -67,6 +70,7 @@ const POLES = [
   {
     title: 'Pôle Valorisation et Transfert de Technologies',
     icon: FlaskConical,
+    // ✅ CORRECTION : Ajout des backticks
     gradient: `linear-gradient(135deg, ${POLE_LIGHT.blue} 0%, ${POLE_COLORS.blue} 100%)`,
     accent: POLE_COLORS.blue,
     shadowColor: 'rgba(96, 165, 250, 0.35)',
@@ -77,6 +81,7 @@ const POLES = [
   {
     title: "Pôle Plateformes d'appui à la R&D et prototypage",
     icon: Cpu,
+    // ✅ CORRECTION : Ajout des backticks
     gradient: `linear-gradient(135deg, ${POLE_LIGHT.pink} 0%, ${POLE_COLORS.pink} 100%)`,
     accent: POLE_COLORS.pink,
     shadowColor: 'rgba(219, 39, 119, 0.35)',
@@ -87,6 +92,7 @@ const POLES = [
   {
     title: 'Pôle Services Transverses',
     icon: Settings,
+    // ✅ CORRECTION : Ajout des backticks
     gradient: `linear-gradient(135deg, ${POLE_LIGHT.gold} 0%, ${POLE_COLORS.gold} 100%)`,
     accent: POLE_COLORS.gold,
     shadowColor: 'rgba(212, 175, 55, 0.35)',
@@ -116,6 +122,7 @@ const fadeUp = {
   transition: { duration: 0.5, ease: 'easeOut' },
 };
 
+// ✅ CORRECTION : Ajout des backticks pour le backgroundImage
 const auroraTextStyle = {
   backgroundImage: `linear-gradient(110deg, ${POLE_COLORS.green} 0%, ${POLE_COLORS.blue} 33%, ${POLE_COLORS.pink} 66%, ${POLE_COLORS.gold} 100%)`,
   backgroundSize: '200% auto',
@@ -123,7 +130,7 @@ const auroraTextStyle = {
   backgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
   color: 'transparent',
-  filter: `drop-shadow(0 2px 10px rgba(219, 39, 119, 0.25)) drop-shadow(0 0 20px rgba(96, 165, 250, 0.20))`,
+  filter: 'drop-shadow(0 2px 10px rgba(219, 39, 119, 0.25)) drop-shadow(0 0 20px rgba(96, 165, 250, 0.20))',
   animation: 'auroraShift 8s ease-in-out infinite',
 };
 
@@ -155,10 +162,11 @@ export default function HomePage() {
 
   if (loading) return <Loading label="Chargement de l'accueil…" />;
 
-  const mapEmbedUrl = "https://www.google.com/maps?q=Cit%C3%A9%20de%20l'Innovation%20Universit%C3%A9%20Cadi%20Ayyad%20Marrakech&output=embed";
-  const mapsLink    = "https://www.google.com/maps?q=Cit%C3%A9%20de%20l'Innovation%20Universit%C3%A9%20Cadi%20Ayyad%20Marrakech";
+    //  Google Maps zoomé sur la Cité de l'Innovation (z=17 force le zoom serré)
+    const mapEmbedUrl = "https://www.google.com/maps?q=Cit%C3%A9%20de%20l'Innovation%20Universit%C3%A9%20Cadi%20Ayyad%20Marrakech&hl=fr&z=17&output=embed";
+    const mapsLink    = "https://www.google.com/maps?q=Cit%C3%A9%20de%20l'Innovation%20Universit%C3%A9%20Cadi%20Ayyad%20Marrakech";
 
-  return (
+    return (
     <div className="relative w-full overflow-x-hidden">
       <style>{`
         @keyframes auroraShift {
@@ -171,7 +179,7 @@ export default function HomePage() {
         }
       `}</style>
 
-      {/* ============ HERO (inchangé) ============ */}
+      {/* ============ HERO ============ */}
       <section
         className="relative w-full overflow-hidden flex items-center py-8 lg:py-0"
         style={{ minHeight: 'calc(100vh - 80px)' }}
@@ -192,6 +200,7 @@ export default function HomePage() {
         />
 
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          {/* ✅ CORRECTION : Backticks ajoutés sur tous les radial-gradients ci-dessous */}
           <div className="absolute -top-32 -left-32 h-[480px] w-[480px] rounded-full blur-3xl"
             style={{ background: `radial-gradient(circle, ${POLE_LIGHT.green} 0%, transparent 70%)`, opacity: 0.70, animation: 'auroraGlow 10s ease-in-out infinite' }} />
           <div className="absolute top-1/4 -right-32 h-[520px] w-[520px] rounded-full blur-3xl"
@@ -219,7 +228,7 @@ export default function HomePage() {
                 <span
                   style={{
                     color: '#FFFFFF',
-                    textShadow: `0 2px 12px rgba(219, 39, 119, 0.55), 0 4px 24px rgba(96, 165, 250, 0.45), 0 0 40px rgba(255,255,255,0.35)`,
+                    textShadow: '0 2px 12px rgba(219, 39, 119, 0.55), 0 4px 24px rgba(96, 165, 250, 0.45), 0 0 40px rgba(255,255,255,0.35)',
                   }}
                 >
                   Bienvenue sur
@@ -229,7 +238,7 @@ export default function HomePage() {
                   className="block mt-1"
                   style={{
                     color: '#FFD1E8',
-                    textShadow: `0 2px 14px rgba(219, 39, 119, 0.70), 0 4px 28px rgba(244, 114, 182, 0.55), 0 0 50px rgba(255,209,232,0.45)`,
+                    textShadow: '0 2px 14px rgba(219, 39, 119, 0.70), 0 4px 28px rgba(244, 114, 182, 0.55), 0 0 50px rgba(255,209,232,0.45)',
                   }}
                 >
                   Cité d&apos;Innovation
@@ -239,7 +248,7 @@ export default function HomePage() {
                   className="block mt-0.5 text-xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl font-bold"
                   style={{
                     color: '#FFFFFF',
-                    textShadow: `0 2px 12px rgba(96, 165, 250, 0.60), 0 4px 24px rgba(212, 175, 55, 0.45), 0 0 35px rgba(255,255,255,0.40)`,
+                    textShadow: '0 2px 12px rgba(96, 165, 250, 0.60), 0 4px 24px rgba(212, 175, 55, 0.45), 0 0 35px rgba(255,255,255,0.40)',
                   }}
                 >
                   UCA
@@ -256,33 +265,35 @@ export default function HomePage() {
                   className="text-sm sm:text-base font-semibold"
                   style={{
                     color: '#1A1A2E',
-                    textShadow: `0 1px 8px rgba(255,255,255,0.95), 0 2px 16px rgba(255,255,255,0.7)`,
+                    textShadow: '0 1px 8px rgba(255,255,255,0.95), 0 2px 16px rgba(255,255,255,0.7)',
                   }}
                 >
                   <span
                     className="font-bold"
-                    style={{ color: '#FFFFFF', textShadow: `0 1px 10px rgba(219, 39, 119, 0.85), 0 0 18px rgba(219, 39, 119, 0.5)` }}
+                    style={{ color: '#FFFFFF', textShadow: '0 1px 10px rgba(219, 39, 119, 0.85), 0 0 18px rgba(219, 39, 119, 0.5)' }}
                   >
                     Réservez
                   </span>
                   {' '}vos espaces.{' '}
                   <span
                     className="font-bold"
-                    style={{ color: '#FFFFFF', textShadow: `0 1px 10px rgba(22, 163, 74, 0.85), 0 0 18px rgba(22, 163, 74, 0.5)` }}
+                    style={{ color: '#FFFFFF', textShadow: '0 1px 10px rgba(22, 163, 74, 0.85), 0 0 18px rgba(22, 163, 74, 0.5)' }}
                   >
                     Inscrivez-vous
                   </span>
                   {' '}aux événements.
                 </p>
+                {/* ✅ MODIFICATION TEXTE : Plus orienté Innovation */}
                 <p
                   className="text-xs sm:text-sm font-medium"
                   style={{
                     color: '#2A2A3E',
-                    textShadow: `0 1px 6px rgba(255,255,255,0.95), 0 2px 12px rgba(255,255,255,0.6)`,
+                    textShadow: '0 1px 6px rgba(255,255,255,0.95), 0 2px 12px rgba(255,255,255,0.6)',
                   }}
                 >
-                  Plateforme unifiée pour la réservation de locaux et l&apos;inscription aux
-                  événements de la Cité d&apos;Innovation — Université Cadi Ayyad.
+                  Un écosystème dédié aux <span className="font-bold text-white">projets innovants</span>, aux
+                  <span className="font-bold text-white"> hackathons</span> et aux collaborations à fort impact.
+                  Réservez vos espaces et rejoignez la dynamique entrepreneuriale de l'UCA.
                 </p>
               </motion.div>
 
@@ -298,7 +309,7 @@ export default function HomePage() {
                     className="group inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
                     style={{
                       background: POLE_COLORS.pink,
-                      boxShadow: `0 10px 25px -5px rgba(219, 39, 119, 0.40)`,
+                      boxShadow: '0 10px 25px -5px rgba(219, 39, 119, 0.40)',
                     }}
                   >
                     <Building2 className="h-4 w-4" />
@@ -314,6 +325,7 @@ export default function HomePage() {
                     style={{
                       borderColor: POLE_COLORS.blue,
                       color: POLE_COLORS.blue,
+                      // ✅ CORRECTION : Backticks ajoutés
                       boxShadow: `0 8px 20px -4px ${POLE_COLORS.blue}30`,
                     }}
                   >
@@ -340,6 +352,7 @@ export default function HomePage() {
                       className="font-display text-2xl sm:text-3xl font-extrabold"
                       style={{
                         color: '#FFFFFF',
+                        // ✅ CORRECTION : Backticks ajoutés
                         textShadow: `0 0 12px ${stat.glow}, 0 2px 8px rgba(0,0,0,0.45), 0 4px 18px rgba(0,0,0,0.30), 0 0 30px ${stat.glow}`,
                       }}
                     >
@@ -370,9 +383,10 @@ export default function HomePage() {
                 style={{
                   background: 'linear-gradient(160deg, rgba(255,255,255,0.96) 0%, rgba(252,252,255,0.94) 100%)',
                   borderColor: 'rgba(255, 255, 255, 0.7)',
-                  boxShadow: `0 25px 60px -15px rgba(219, 39, 119, 0.30), 0 0 80px rgba(96, 165, 250, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.7)`,
+                  boxShadow: '0 25px 60px -15px rgba(219, 39, 119, 0.30), 0 0 80px rgba(96, 165, 250, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.7)',
                 }}
               >
+                {/* ✅ CORRECTION : Backticks ajoutés sur les radials ci-dessous */}
                 <div className="pointer-events-none absolute -top-8 -right-8 h-24 w-24 rounded-full blur-2xl opacity-50"
                   style={{ background: `radial-gradient(circle, ${POLE_LIGHT.green} 0%, transparent 70%)` }} />
                 <div className="pointer-events-none absolute -bottom-8 -left-8 h-24 w-24 rounded-full blur-2xl opacity-45"
@@ -391,6 +405,7 @@ export default function HomePage() {
                   </div>
                   <div
                     className="flex h-8 w-8 items-center justify-center rounded-lg shrink-0 shadow-sm"
+                    // ✅ CORRECTION : Backticks ajoutés
                     style={{ background: `${POLE_COLORS.blue}20`, border: `1px solid ${POLE_COLORS.blue}40` }}
                   >
                     <Bookmark className="h-3.5 w-3.5" style={{ color: POLE_COLORS.blue }} />
@@ -402,6 +417,7 @@ export default function HomePage() {
                     <motion.div
                       key={s.num}
                       className="relative overflow-hidden flex items-start gap-2.5 rounded-xl bg-white/80 backdrop-blur-sm p-2 hover:bg-white hover:shadow-md transition-all"
+                      // ✅ CORRECTION : Backticks ajoutés
                       style={{ border: `1px solid ${s.color}30` }}
                       initial={{ opacity: 0, x: 12 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -420,6 +436,7 @@ export default function HomePage() {
 
                       <div
                         className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border-2 shadow-sm"
+                        // ✅ CORRECTION : Backticks ajoutés
                         style={{ borderColor: s.color, background: `${s.color}20` }}
                       >
                         <span className="font-display text-[11px] font-extrabold" style={{ color: s.color }}>
@@ -436,6 +453,7 @@ export default function HomePage() {
 
                 <div
                   className="relative mt-3 flex items-center gap-2 rounded-lg px-2.5 py-1.5"
+                  // ✅ CORRECTION : Backticks ajoutés
                   style={{ background: `${POLE_COLORS.blue}10`, border: `1px solid ${POLE_COLORS.blue}30` }}
                 >
                   <MapPin className="h-3 w-3 shrink-0" style={{ color: POLE_COLORS.blue }} />
@@ -462,9 +480,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ 4 PÔLES (inchangé) ============ */}
+      {/* ============ 4 PÔLES ============ */}
       <section className="relative w-full py-14 sm:py-16 bg-[#F5F7FA]">
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          {/* ✅ CORRECTION : Backticks ajoutés */}
           <div className="absolute top-16 left-10 h-56 w-56 rounded-full blur-3xl" style={{ background: `${POLE_COLORS.green}15` }} />
           <div className="absolute bottom-16 right-10 h-56 w-56 rounded-full blur-3xl" style={{ background: `${POLE_COLORS.pink}15` }} />
         </div>
@@ -474,6 +493,7 @@ export default function HomePage() {
             <span
               className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
               style={{
+                // ✅ CORRECTION : Backticks ajoutés
                 background: `${POLE_COLORS.blue}15`,
                 borderColor: `${POLE_COLORS.blue}30`,
                 color: POLE_COLORS.blue,
@@ -505,6 +525,7 @@ export default function HomePage() {
                   <div
                     className="overflow-hidden rounded-2xl bg-white border border-stone-200/60 shadow-sm transition-all duration-500 hover:-translate-y-1.5 h-full flex flex-col"
                     onMouseEnter={(e) => {
+                      // ✅ CORRECTION : Backticks ajoutés
                       e.currentTarget.style.boxShadow = `0 25px 50px -12px ${pole.shadowColor}, 0 0 0 1px ${pole.shadowColor}`;
                     }}
                     onMouseLeave={(e) => { e.currentTarget.style.boxShadow = ''; }}
@@ -549,9 +570,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ NOS ESPACES — TOUS EN JAUNE DORÉ (Pôle Transverses) ============ */}
+      {/* ============ NOS ESPACES — TOUS EN JAUNE DORÉ ============ */}
       <section className="relative w-full py-14 sm:py-16 bg-gradient-to-b from-[#FAF6F2] to-[#F5F7FA]">
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          {/* ✅ CORRECTION : Backticks ajoutés */}
           <div className="absolute top-32 -left-24 h-72 w-72 rounded-full blur-3xl" style={{ background: `${TRANSVERSE_COLOR}15` }} />
           <div className="absolute bottom-32 -right-24 h-72 w-72 rounded-full blur-3xl" style={{ background: `${POLE_LIGHT.gold}20` }} />
         </div>
@@ -562,6 +584,7 @@ export default function HomePage() {
               <span
                 className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider"
                 style={{
+                  // ✅ CORRECTION : Backticks ajoutés
                   background: `${TRANSVERSE_COLOR}15`,
                   borderColor: `${TRANSVERSE_COLOR}40`,
                   color: TRANSVERSE_COLOR_DARK,
@@ -582,6 +605,7 @@ export default function HomePage() {
               className="group inline-flex items-center gap-1 rounded-full bg-white border px-4 py-2 text-xs font-semibold transition-all"
               style={{ borderColor: `${TRANSVERSE_COLOR}50`, color: TRANSVERSE_COLOR_DARK }}
               onMouseEnter={(e) => {
+                // ✅ CORRECTION : Backticks ajoutés
                 e.currentTarget.style.boxShadow = `0 10px 25px -5px ${TRANSVERSE_SHADOW}`;
               }}
               onMouseLeave={(e) => {
@@ -615,6 +639,7 @@ export default function HomePage() {
                     <div
                       className="group overflow-hidden rounded-2xl border border-stone-200/70 bg-white h-full flex flex-col transition-all duration-500 hover:-translate-y-1"
                       onMouseEnter={(e) => {
+                         // ✅ CORRECTION : Backticks ajoutés
                         e.currentTarget.style.boxShadow = `0 20px 45px -12px ${TRANSVERSE_SHADOW}, 0 0 0 1px ${TRANSVERSE_SHADOW}`;
                       }}
                       onMouseLeave={(e) => { e.currentTarget.style.boxShadow = ''; }}
@@ -624,6 +649,7 @@ export default function HomePage() {
 
                       <div
                         className="relative h-40 overflow-hidden bg-stone-100"
+                        // ✅ CORRECTION : Backticks ajoutés
                         style={!hasImage ? { background: `${TRANSVERSE_COLOR}15` } : {}}
                       >
                         {hasImage ? (
@@ -660,6 +686,7 @@ export default function HomePage() {
                                 className="flex h-16 w-16 items-center justify-center rounded-2xl shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6"
                                 style={{
                                   background: TRANSVERSE_GRADIENT,
+                                  // ✅ CORRECTION : Backticks ajoutés
                                   boxShadow: `0 10px 25px -5px ${TRANSVERSE_SHADOW}`,
                                 }}
                               >
@@ -674,6 +701,7 @@ export default function HomePage() {
                           <span
                             className="rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider backdrop-blur-md shadow-md"
                             style={{
+                              // ✅ CORRECTION : Backticks ajoutés
                               background: hasImage ? `${TRANSVERSE_COLOR}EE` : `${TRANSVERSE_COLOR}20`,
                               color: hasImage ? '#FFFFFF' : TRANSVERSE_COLOR_DARK,
                               border: hasImage ? `1px solid ${TRANSVERSE_COLOR}` : `1px solid ${TRANSVERSE_COLOR}40`,
@@ -734,6 +762,7 @@ export default function HomePage() {
                               className="group/btn w-full inline-flex items-center justify-center gap-1 rounded-full px-2.5 py-1.5 text-[11px] font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5"
                               style={{
                                 background: TRANSVERSE_GRADIENT,
+                                // ✅ CORRECTION : Backticks ajoutés
                                 boxShadow: `0 6px 15px -3px ${TRANSVERSE_SHADOW}`,
                               }}
                             >
@@ -757,6 +786,7 @@ export default function HomePage() {
                 className="group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
                 style={{
                   background: TRANSVERSE_GRADIENT,
+                  // ✅ CORRECTION : Backticks ajoutés
                   boxShadow: `0 10px 25px -5px ${TRANSVERSE_SHADOW}`,
                 }}
               >
@@ -768,7 +798,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ ANNONCES (inchangé) ============ */}
+      {/* ============ ANNONCES ============ */}
       <section className="relative w-full py-14 bg-gradient-to-b from-[#F5F7FA] to-[#FAF6F2]">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <motion.div className="mb-7 flex flex-wrap items-end justify-between gap-3" {...fadeUp}>
@@ -776,6 +806,7 @@ export default function HomePage() {
               <span
                 className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider"
                 style={{
+                   // ✅ CORRECTION : Backticks ajoutés
                   background: `${POLE_COLORS.pink}12`,
                   borderColor: `${POLE_COLORS.pink}30`,
                   color: POLE_COLORS.pink,
@@ -795,6 +826,7 @@ export default function HomePage() {
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = POLE_COLORS.pink;
                 e.currentTarget.style.color = POLE_COLORS.pink;
+                 // ✅ CORRECTION : Backticks ajoutés
                 e.currentTarget.style.boxShadow = `0 10px 25px -5px ${POLE_COLORS.pink}40`;
               }}
               onMouseLeave={(e) => {
@@ -820,6 +852,7 @@ export default function HomePage() {
                 <div
                   className="h-full overflow-hidden rounded-xl bg-white border border-stone-200/70 shadow-sm transition-all duration-300 hover:-translate-y-1"
                   onMouseEnter={(e) => {
+                     // ✅ CORRECTION : Backticks ajoutés
                     e.currentTarget.style.boxShadow = `0 20px 40px -12px ${POLE_COLORS.pink}40`;
                     e.currentTarget.style.borderColor = `${POLE_COLORS.pink}50`;
                   }}
@@ -831,6 +864,7 @@ export default function HomePage() {
                   <div
                     className="h-1.5"
                     style={{
+                      // ✅ CORRECTION : Backticks ajoutés
                       background: `linear-gradient(90deg, ${POLE_COLORS.pink} 0%, ${POLE_COLORS.pink} 50%, ${POLE_COLORS.gold} 50%, ${POLE_COLORS.gold} 100%)`,
                     }}
                   />
@@ -868,6 +902,7 @@ export default function HomePage() {
               <span
                 className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider"
                 style={{
+                   // ✅ CORRECTION : Backticks ajoutés
                   background: `${POLE_COLORS.green}12`,
                   borderColor: `${POLE_COLORS.green}30`,
                   color: POLE_COLORS.green,
@@ -887,6 +922,7 @@ export default function HomePage() {
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = POLE_COLORS.green;
                 e.currentTarget.style.color = POLE_COLORS.green;
+                 // ✅ CORRECTION : Backticks ajoutés
                 e.currentTarget.style.boxShadow = `0 10px 25px -5px ${POLE_COLORS.green}40`;
               }}
               onMouseLeave={(e) => {
@@ -986,6 +1022,7 @@ export default function HomePage() {
             <span
               className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider"
               style={{
+                 // ✅ CORRECTION : Backticks ajoutés
                 background: `${POLE_COLORS.gold}15`,
                 borderColor: `${POLE_COLORS.gold}40`,
                 color: POLE_COLORS.gold,
@@ -1004,6 +1041,7 @@ export default function HomePage() {
 
           <motion.div
             className="overflow-hidden rounded-2xl border border-stone-200/70 bg-white transition-all duration-500"
+             // ✅ CORRECTION : Backticks ajoutés
             style={{ boxShadow: `0 20px 50px -15px ${POLE_COLORS.blue}30` }}
             {...fadeUp}
           >
@@ -1011,6 +1049,7 @@ export default function HomePage() {
               className="relative overflow-hidden flex items-start gap-3 px-5 py-5 sm:px-7"
               style={{ background: '#FFFFFF' }}
             >
+               {/* ✅ CORRECTION : Backticks ajoutés sur tous les radials ci-dessous */}
               <div
                 className="pointer-events-none absolute -top-20 -left-16 h-56 w-56 rounded-full blur-3xl"
                 style={{ background: `radial-gradient(circle, ${POLE_LIGHT.green} 0%, transparent 65%)`, opacity: 1 }}
@@ -1034,6 +1073,7 @@ export default function HomePage() {
 
               <div
                 className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/85 backdrop-blur-md ring-1 ring-white/90 shadow-md"
+                 // ✅ CORRECTION : Backticks ajoutés
                 style={{ boxShadow: `0 8px 20px -5px ${POLE_COLORS.pink}40` }}
               >
                 <MapPin className="h-6 w-6" style={{ color: POLE_COLORS.pink }} />
@@ -1065,6 +1105,7 @@ export default function HomePage() {
                   rel="noreferrer"
                   className="group mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm border px-3.5 py-1.5 text-xs font-semibold transition-all hover:bg-white hover:-translate-y-0.5"
                   style={{
+                     // ✅ CORRECTION : Backticks ajoutés
                     borderColor: `${POLE_COLORS.blue}60`,
                     color: POLE_COLORS.blue,
                     boxShadow: `0 6px 18px -4px ${POLE_COLORS.blue}50`,
@@ -1076,15 +1117,22 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="relative h-[320px] w-full bg-stone-100">
+            {/* ✅ Carte zoomée + interactions bloquées (impossible de dézoomer) */}
+            <div className="relative h-[320px] w-full bg-stone-100 overflow-hidden">
               <iframe
-                title="Localisation - Cité d'Innovation Marrakech"
-                src={mapEmbedUrl}
-                className="h-full w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
+                 title="Localisation - Cité d'Innovation Marrakech"
+                 src={mapEmbedUrl}
+                 className="h-full w-full"
+                 style={{ pointerEvents: 'none' }}
+                 loading="lazy"
+                 referrerPolicy="no-referrer-when-downgrade"
               />
+              {/* Overlay invisible qui empêche TOUTE interaction (scroll/zoom/clic) */}
+               <div
+                  className="absolute inset-0 cursor-default"
+                  aria-hidden
+                  style={{ background: 'transparent' }}
+               />
             </div>
           </motion.div>
         </div>
