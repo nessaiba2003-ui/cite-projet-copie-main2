@@ -1,0 +1,464 @@
+/* ═══════════════════════════════════════════════
+   IMMERSION DOOR — Style luxe bordeaux/or pâle
+   ═══════════════════════════════════════════════ */
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(155, 65, 90, 0.25);
+  background: linear-gradient(180deg, #2A1520 0%, #1A0E18 50%, #2A1520 100%);
+  box-shadow:
+    0 25px 70px rgba(60, 20, 40, 0.45),
+    inset 0 1px 0 rgba(232, 198, 154, 0.20);
+}
+
+.stage {
+  position: relative;
+  height: 580px;
+}
+
+/* Contenu au-dessus (popup) */
+.inner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 60;
+  padding: 24px;
+}
+
+.innerGlow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 280px at 50% 55%, rgba(232, 198, 154, 0.10), transparent 65%),
+    radial-gradient(500px 240px at 50% 55%, rgba(255, 240, 220, 0.06), transparent 70%);
+  pointer-events: none;
+}
+
+/* Fond intérieur lumineux (visible derrière les portes) */
+.rail {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background:
+    radial-gradient(900px 420px at 50% 55%,
+      rgba(255, 240, 215, 0.55),
+      rgba(232, 198, 154, 0.30),
+      rgba(155, 65, 90, 0.15)),
+    linear-gradient(180deg,
+      rgba(232, 198, 154, 0.05),
+      rgba(155, 65, 90, 0.08));
+  transition: filter 750ms ease, transform 750ms ease, opacity 750ms ease;
+}
+
+.rail::before {
+  content: "CITÉ";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 140px;
+  font-weight: 900;
+  letter-spacing: 12px;
+  color: rgba(232, 198, 154, 0.10);
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 0 40px rgba(232, 198, 154, 0.2);
+}
+
+.rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(0,0,0,0.15) 0%,
+      transparent 20%,
+      transparent 75%,
+      rgba(155, 65, 90, 0.15) 100%);
+  pointer-events: none;
+}
+
+/* Fog lumineux d'accueil */
+.sasFog {
+  position: absolute;
+  inset: -30%;
+  z-index: 6;
+  background:
+    radial-gradient(600px 320px at 50% 50%,
+      rgba(255, 240, 215, 0.85),
+      rgba(232, 198, 154, 0.25) 50%,
+      transparent 70%),
+    radial-gradient(700px 380px at 50% 55%,
+      rgba(232, 198, 154, 0.20),
+      transparent 65%);
+  filter: blur(20px);
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 650ms ease;
+  pointer-events: none;
+}
+
+/* Scanline LED dorée */
+.scanline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 180px;
+  left: -200px;
+  z-index: 7;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    transparent 30%,
+    rgba(232, 198, 154, 0.35) 50%,
+    transparent 70%,
+    transparent
+  );
+  filter: blur(2px);
+  opacity: 0.6;
+  animation: scan 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(1500px, 0, 0); }
+}
+
+/* CADRE de la porte (encadrement or pâle brillant) */
+.frameGold {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 460px;
+  height: 500px;
+  z-index: 20;
+  border-radius: 18px 18px 8px 8px;
+  background: linear-gradient(180deg, #F5DCBC 0%, #E8C69A 35%, #B8945E 100%);
+  padding: 5px;
+  box-shadow:
+    0 0 50px rgba(232, 198, 154, 0.40),
+    0 30px 70px rgba(60, 20, 40, 0.55),
+    inset 0 2px 5px rgba(255, 240, 200, 0.6),
+    inset 0 -2px 5px rgba(120, 80, 30, 0.4);
+}
+
+.frameInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px 14px 5px 5px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #1A0E15 0%, #2A1520 100%);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Plaque "ENTRÉE PRINCIPALE" au-dessus */
+.namePlate {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -300px);
+  z-index: 25;
+  padding: 6px 24px;
+  border-radius: 10px;
+  background: linear-gradient(180deg,
+    rgba(232, 198, 154, 0.20) 0%,
+    rgba(232, 198, 154, 0.08) 100%);
+  border: 1px solid rgba(232, 198, 154, 0.5);
+  box-shadow:
+    0 0 22px rgba(232, 198, 154, 0.35),
+    inset 0 1px 0 rgba(255, 240, 200, 0.3);
+}
+
+.namePlateText {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  color: #E8C69A;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(232, 198, 154, 0.6);
+}
+
+/* LEDs scanner au-dessus */
+.ledStrip {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 36;
+  display: flex;
+  gap: 5px;
+}
+
+.led {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #E8C69A;
+  box-shadow: 0 0 8px rgba(232, 198, 154, 0.95);
+  animation: ledBlink 1.5s ease-in-out infinite;
+}
+
+.led:nth-child(2) { animation-delay: 0.2s; }
+.led:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes ledBlink {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.open .led,
+.opening .led {
+  background: #88D4B7;
+  box-shadow: 0 0 10px rgba(136, 212, 183, 0.95);
+  animation: none;
+  opacity: 1;
+}
+
+/* PORTES (sombres bordeaux avec accents dorés) */
+.doorLeft,
+.doorRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 30;
+
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  overflow: hidden;
+
+  background:
+    linear-gradient(135deg, #3A2030 0%, #2A1520 40%, #1A0E18 100%);
+
+  border: 1px solid rgba(232, 198, 154, 0.3);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 240, 200, 0.08),
+    inset 0 -40px 80px rgba(0, 0, 0, 0.5),
+    0 20px 45px rgba(40, 15, 30, 0.4);
+}
+
+.doorLeft {
+  left: 0;
+  border-right: none;
+  background-image:
+    linear-gradient(135deg, #3A2030 0%, #2A1520 40%, #1A0E18 100%);
+  box-shadow:
+    inset -2px 0 12px rgba(0, 0, 0, 0.65),
+    inset 1px 0 0 rgba(232, 198, 154, 0.20),
+    inset 0 0 0 1px rgba(255, 240, 200, 0.05);
+}
+
+.doorRight {
+  right: 0;
+  border-left: none;
+  background-image:
+    linear-gradient(225deg, #3A2030 0%, #2A1520 40%, #1A0E18 100%);
+  box-shadow:
+    inset 2px 0 12px rgba(0, 0, 0, 0.65),
+    inset -1px 0 0 rgba(232, 198, 154, 0.20),
+    inset 0 0 0 1px rgba(255, 240, 200, 0.05);
+}
+
+/* Reflet doré central */
+.doorLeft::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 140px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(232, 198, 154, 0.7) 50%,
+    transparent 100%);
+  box-shadow: 0 0 12px rgba(232, 198, 154, 0.6);
+}
+
+.doorRight::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 140px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(232, 198, 154, 0.7) 50%,
+    transparent 100%);
+  box-shadow: 0 0 12px rgba(232, 198, 154, 0.6);
+}
+
+/* Poignées dorées verticales */
+.doorLeft::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 70px;
+  border-radius: 999px;
+  background: linear-gradient(180deg,
+    #F5DCBC 0%,
+    #E8C69A 50%,
+    #B8945E 100%);
+  box-shadow:
+    0 0 10px rgba(232, 198, 154, 0.7),
+    inset 0 1px 1px rgba(255, 240, 200, 0.8);
+}
+
+.doorRight::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 70px;
+  border-radius: 999px;
+  background: linear-gradient(180deg,
+    #F5DCBC 0%,
+    #E8C69A 50%,
+    #B8945E 100%);
+  box-shadow:
+    0 0 10px rgba(232, 198, 154, 0.7),
+    inset 0 1px 1px rgba(255, 240, 200, 0.8);
+}
+
+/* Jointure centrale */
+.seam {
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  bottom: 8%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(232, 198, 154, 0.3) 30%,
+    rgba(232, 198, 154, 0.55) 50%,
+    rgba(232, 198, 154, 0.3) 70%,
+    transparent 100%);
+  box-shadow: 0 0 6px rgba(232, 198, 154, 0.4);
+  z-index: 35;
+  transition: opacity 250ms ease;
+}
+
+/* Logo gravé sur portes fermées */
+.doorLeft .doorLogo,
+.doorRight .doorLogo {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.4em;
+  color: rgba(232, 198, 154, 0.40);
+  writing-mode: vertical-rl;
+  text-shadow: 0 0 4px rgba(232, 198, 154, 0.5);
+  transition: opacity 400ms ease;
+}
+
+.doorLeft .doorLogo {
+  left: 30%;
+  top: 35%;
+  transform: rotate(180deg);
+}
+
+.doorRight .doorLogo {
+  right: 30%;
+  top: 35%;
+}
+
+.opening .doorLogo,
+.open .doorLogo {
+  opacity: 0;
+}
+
+/* States: closed/opening/open */
+.closed .seam { opacity: 1; }
+
+.opening .rail {
+  filter: blur(6px) brightness(1.2);
+  transform: scale(1.02);
+}
+
+.open .rail {
+  filter: blur(2px) brightness(1.15);
+}
+
+.opening .sasFog { opacity: 1; }
+.open .sasFog { opacity: 0.4; }
+
+.opening .seam { opacity: 0; }
+.open .seam { opacity: 0; }
+
+/* Animation ouverture portes */
+.opening .doorLeft {
+  animation: slideLeft 1400ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.opening .doorRight {
+  animation: slideRight 1400ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.open .doorLeft { transform: translate3d(-100%, 0, 0); }
+.open .doorRight { transform: translate3d(100%, 0, 0); }
+
+@keyframes slideLeft {
+  0%   { transform: translate3d(0, 0, 0); }
+  8%   { transform: translate3d(-4px, 0, 0); }
+  16%  { transform: translate3d(3px, 0, 0); }
+  22%  { transform: translate3d(-2px, 0, 0); }
+  28%  { transform: translate3d(-6px, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+@keyframes slideRight {
+  0%   { transform: translate3d(0, 0, 0); }
+  8%   { transform: translate3d(4px, 0, 0); }
+  16%  { transform: translate3d(-3px, 0, 0); }
+  22%  { transform: translate3d(2px, 0, 0); }
+  28%  { transform: translate3d(6px, 0, 0); }
+  100% { transform: translate3d(100%, 0, 0); }
+}
+
+.closed .namePlate {
+  animation: platePulse 3s ease-in-out infinite;
+}
+
+@keyframes platePulse {
+  0%, 100% { box-shadow: 0 0 22px rgba(232, 198, 154, 0.35), inset 0 1px 0 rgba(255, 240, 200, 0.3); }
+  50% { box-shadow: 0 0 35px rgba(232, 198, 154, 0.55), inset 0 1px 0 rgba(255, 240, 200, 0.4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanline,
+  .led,
+  .namePlate {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .opening .doorLeft,
+  .opening .doorRight {
+    animation: none !important;
+  }
+
+  .opening .rail {
+    filter: none;
+    transform: none;
+  }
+
+  .open .doorLeft { transform: translate3d(-100%, 0, 0); }
+  .open .doorRight { transform: translate3d(100%, 0, 0); }
+  .open .seam { opacity: 0; }
+}

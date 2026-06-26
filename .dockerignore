@@ -1,0 +1,15 @@
+.git
+.idea
+.mvn/wrapper/maven-wrapper.jar
+compile_errors.txt
+
+frontend
+node_modules
+dist
+target
+
+uploads
+data
+
+*.log
+*.tmp

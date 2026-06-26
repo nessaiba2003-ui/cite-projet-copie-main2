@@ -1,0 +1,32 @@
+%%{init:{
+"theme":"base",
+"themeVariables":{
+"fontFamily":"Arial",
+"primaryColor":"#2563eb",
+"primaryTextColor":"#ffffff",
+"primaryBorderColor":"#1d4ed8",
+"lineColor":"#cbd5e1",
+"sectionBkgColor":"#f8fafc",
+"sectionTextColor":"#0f172a",
+"gridColor":"#e2e8f0",
+"todayLineColor":"#ef4444"
+}
+}}%%
+
+gantt
+    title Planning du projet PFE
+    dateFormat YYYY-MM-DD
+    axisFormat %d/%m
+
+    section Analyse & Conception
+    Analyse des besoins :done, a1, 2026-05-01, 7d
+
+    section Développement
+    Backend :done, a2, after a1, 14d
+    Frontend :done, a3, after a2, 14d
+
+    section Validation
+    Tests :done, a4, after a3, 7d
+
+    section Documentation
+    Rapport :active, a5, 2026-05-15, 25d

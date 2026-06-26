@@ -1,0 +1,254 @@
+/* ─────────────────────────────────────────────
+   🎨 Design System — Cité d'Innovation UCA
+   Palette pastel aurora, Light only
+   ───────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────
+   SCROLLBAR — discrète, pastel
+   ───────────────────────────────────────────── */
+* {
+  scrollbar-color: rgba(224, 122, 95, 0.35) transparent;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar { height: 10px; width: 10px; }
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(224, 122, 95, 0.35), rgba(155, 142, 196, 0.35));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(224, 122, 95, 0.55), rgba(155, 142, 196, 0.55));
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ─────────────────────────────────────────────
+   LIENS
+   ───────────────────────────────────────────── */
+a { color: inherit; }
+
+a.link-primary {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a.link-primary:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ─────────────────────────────────────────────
+   FULLCALENDAR — Look pastel
+   ───────────────────────────────────────────── */
+.fc .fc-toolbar-title {
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--color-text);
+}
+
+.fc .fc-button {
+  border-radius: 12px !important;
+  border: 1px solid var(--color-border) !important;
+  background: #ffffff !important;
+  color: var(--color-text) !important;
+  font-weight: 600 !important;
+  text-transform: capitalize !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 2px rgba(60, 40, 30, 0.04) !important;
+}
+
+.fc .fc-button:hover {
+  background: rgba(224, 122, 95, 0.08) !important;
+  border-color: rgba(224, 122, 95, 0.35) !important;
+  color: var(--color-primary-dark) !important;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background: var(--gradient-coral) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px -2px rgba(224, 122, 95, 0.3) !important;
+}
+
+.fc .fc-col-header-cell {
+  background: rgba(250, 246, 242, 0.5);
+  font-weight: 600;
+}
+
+.fc .fc-daygrid-day:hover {
+  background: rgba(224, 122, 95, 0.04);
+}
+
+.fc .fc-day-today {
+  background: rgba(242, 204, 143, 0.15) !important;
+}
+
+/* ─────────────────────────────────────────────
+   PASTILLES / BADGES PASTEL
+   ───────────────────────────────────────────── */
+.pill-coral {
+  background: rgba(224, 122, 95, 0.12);
+  color: var(--color-primary-dark);
+  border: 1px solid rgba(224, 122, 95, 0.25);
+}
+.pill-mint {
+  background: rgba(91, 191, 160, 0.12);
+  color: var(--color-secondary-dark);
+  border: 1px solid rgba(91, 191, 160, 0.25);
+}
+.pill-amber {
+  background: rgba(242, 204, 143, 0.18);
+  color: #A57A3A;
+  border: 1px solid rgba(242, 204, 143, 0.35);
+}
+.pill-lavender {
+  background: rgba(155, 142, 196, 0.12);
+  color: var(--color-lavender-dark);
+  border: 1px solid rgba(155, 142, 196, 0.25);
+}
+
+/* ─────────────────────────────────────────────
+   CARDS PASTEL (style "4 pôles d'excellence")
+   ───────────────────────────────────────────── */
+.pastel-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px -2px rgba(60, 40, 30, 0.06);
+}
+
+.pastel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -12px rgba(60, 40, 30, 0.15);
+  border-color: rgba(224, 122, 95, 0.2);
+}
+
+.pastel-card-header {
+  padding: 2rem 1.5rem;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.pastel-card-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────
+   BOUTON "CHIP" (pilule sombre — style Hero CTA)
+   ───────────────────────────────────────────── */
+.chip-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 9999px;
+  background: #1B1A1F;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.25);
+}
+.chip-dark:hover {
+  background: #292524;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.3);
+}
+
+.chip-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+}
+.chip-outline:hover {
+  background: #ffffff;
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION SPACING UTILITIES
+   ───────────────────────────────────────────── */
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   TITRE DE SECTION AVEC LIGNE DÉCORATIVE
+   ───────────────────────────────────────────── */
+.section-title-deco::after {
+  content: '';
+  display: block;
+  margin: 1rem auto 0;
+  width: 60px;
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--gradient-coral);
+}
+
+/* ─────────────────────────────────────────────
+   SHIMMER (loading effect)
+   ───────────────────────────────────────────── */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(247, 245, 243, 0.4) 0%,
+    rgba(247, 245, 243, 0.8) 50%,
+    rgba(247, 245, 243, 0.4) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerMove 2.4s linear infinite;
+}
+
+@keyframes shimmerMove {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ─────────────────────────────────────────────
+   FOCUS RING PERSONNALISÉ
+   ───────────────────────────────────────────── */
+.focus-ring-coral {
+  outline: none;
+}
+.focus-ring-coral:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
